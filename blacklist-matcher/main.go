@@ -3,9 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	// "path"
-	// "bufio"
-	// "os"
 	"strings"
 
 	"golang.org/x/text/language"
@@ -76,14 +73,6 @@ func loadWordBlacklist() (words []string, err error) {
 	if err != nil {
 		fmt.Println("Blacklist database could not be loaded")
 	}
-	// fmt.Printf(data)
-	// scanner := bufio.Buffer(data)
-	// scanner.Split(data)
-	// for scanner.Scan() {
-	// 	words = append(words, scanner.Text())
-	// }
-	// file.Close()
-
 	return strings.Split(string(data), "\n"), nil
 }
 

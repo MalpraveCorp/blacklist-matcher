@@ -18,6 +18,8 @@ var safeTextHebrew = "אקראי גיאוגרפיה ב בקר, בהשחתה עק
 
 var unsafeTextEnglish = "A strip club is a venue where strippers provide adult entertainment, predominantly in the form of striptease or other erotic or exotic dances. Strip clubs typically adopt a nightclub or bar style, and can also adopt a theatre or cabaret-style."
 
+var unsafeTextThai = "ผู้อำนวยการสำนักบริหารพื้นที่อนุรักษ์ที่ 8 (ขอนแก่น) กล่าวอีกว่า จากการบินขึ้นสำรวจของพารามอเตอร์ พบว่ามีฝูงวัวของชาว วิ่งหนีฝูงแตกกระเจิง ในขณะเดียวกันเจ้าหน้าที่ได้เข้าพื้นที่ตรวจสอบ พบรอยเท้าและร่องรอยการเดินของหมีควาย จึงมีความมั่นใจว่า วันนี้ น่าจะสามารถยิงยาสลบหมีควายตัวนี้ได้."
+
 func TestHandler(t *testing.T) {
 
 	ctx := context.Background()
@@ -44,6 +46,11 @@ func TestHandler(t *testing.T) {
 		{
 			request:    main.Request{Body: unsafeTextEnglish},
 			expectBody: "Submission is invalid. Found black listed keyword: erotic",
+			expectCode: 400,
+		},
+		{
+			request:    main.Request{Body: unsafeTextThai},
+			expectBody: "Submission is invalid. Found black listed keyword: ควาย",
 			expectCode: 400,
 		},
 	}
