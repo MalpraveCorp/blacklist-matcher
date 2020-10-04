@@ -8,12 +8,11 @@ import (
 	// "os"
 	"strings"
 
-	"golang.org/x/text/search"
 	"golang.org/x/text/language"
+	"golang.org/x/text/search"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-
 	// "github.com/cloudflare/ahocorasick"
 )
 
@@ -25,8 +24,8 @@ func Handler(ctx context.Context, request Request) (Response, error) {
 	blacklist, err := loadWordBlacklist()
 	if err != nil {
 		return Response{
-			StatusCode:      500,
-			Body:            fmt.Sprintf("Cannot load blacklist database"),
+			StatusCode: 500,
+			Body:       fmt.Sprintf("Cannot load blacklist database"),
 		}, nil
 	}
 
@@ -35,14 +34,14 @@ func Handler(ctx context.Context, request Request) (Response, error) {
 	// return on first match
 	if found == true {
 		return Response{
-			StatusCode:      400,
-			Body:            fmt.Sprintf("Submission is invalid. Found black listed keyword: %s", word),
+			StatusCode: 400,
+			Body:       fmt.Sprintf("Submission is invalid. Found black listed keyword: %s", word),
 		}, nil
 	}
 
 	return Response{
-		StatusCode:      200,
-		Body:            "Submission is valid",
+		StatusCode: 200,
+		Body:       "Submission is valid",
 	}, nil
 
 }
@@ -52,14 +51,14 @@ func Handler(ctx context.Context, request Request) (Response, error) {
 // but performance seem to be equivelent to standard library for
 // tests with 100s of keywords and a body of text under 1000 words.
 func findBlacklistWord(words []string, src string) (word string, found bool) {
-    m := search.New(language.Thai, search.IgnoreCase)
-    for _, v := range words {
-    	i, _ := m.IndexString(src, v)
-    	if(i > 0) {
-    		return v, true
-    	}
-    }
-    return "", false;
+	m := search.New(language.Thai, search.IgnoreCase)
+	for _, v := range words {
+		i, _ := m.IndexString(src, v)
+		if i > 0 {
+			return v, true
+		}
+	}
+	return "", false
 }
 
 // func findBlackListWordAhocorasick(words []string, src string) (word string, found bool) {
@@ -71,7 +70,6 @@ func findBlacklistWord(words []string, src string) (word string, found bool) {
 // 	}
 // 	return "", false
 // }
-
 
 func loadWordBlacklist() (words []string, err error) {
 	data, err := Asset("blacklist.txt")
