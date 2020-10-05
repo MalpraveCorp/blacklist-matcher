@@ -7,23 +7,29 @@ Cloudflare's Go implemention of Aho-Corasick was also tested but showed no benef
 ### Usage
 
 Clone repo
+
 `git clone git@github.com:MalpraveCorp/blacklist-matcher.git`
 
 Build project
+
 `make`
 
 Deploy
+
 `sls deploy`
 
 Load test
+
 `k6 run loadtest.js`
 
 API
+
 Send a POST request with the article in the body
+
 `curl https://$ENDPOINT/dev/blacklist-matcher -d "article contents"
 `
 ### Performance
-For a day to day usage, using the blacklist provided in this repo, here's the load testing results showing a p95 performance under 100ms (no cold starts). 
+Using the blacklist provided in this repo, here's the load testing results showing a p95 performance under 100ms (skipping cold starts). 
 
 ```
 
